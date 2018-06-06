@@ -4,15 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Handle the JDBC connection to the database
- * This class has package-level visibility: only DAO object may call it
- * @author Fulvio
- *
- */
+/*DB con i confini, dico i due paesi, la tipologia di contiguita(via mare, terra, fiumi)
+ *anno a partire dal quale questi sono diventati confinanti, mi interessano
+ *solo i confini di terra tipo 1 */
 class DBConnect {
 	
-	private static String url = "jdbc:mysql://localhost/countries?user=root&password=root";
+	private static String url = "jdbc:mysql://localhost/countries?user=root&password=gualtieri95";
 
 	/**
 	 * Restituisce una nuova connessione, con i parametri a lui noti

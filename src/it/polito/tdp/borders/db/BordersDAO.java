@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BordersDAO {
 	
+	//restituisce tutte le nazioni
 	public List<Country> loadAllCountries() {
 		
 		String sql = 
@@ -52,19 +53,21 @@ public class BordersDAO {
 		return null ;
 	}
 	
+	//restituisce lista country collegati fino all'anno passato(torna vertici grafo)
 	public List<Country> getCountriesFromYear(int anno) {
-		String sql = "select * from country " + 
-				"where CCode in ( " + 
-				"select state1no " + 
+		String sql = "select * from country " + //dammi i campi di country
+				"where CCode in ( " +  //solo se il cod cauntry sta nell'intervallo specificato
+				"select state1no " +  //query annidata, seleziona stato 1 da tabella di confinanti 
 				"from contiguity " + 
-				"where year<=? and conttype=1)" ;
+				"where year<=? and conttype=1)" +//se anno minore di quello passato e confine via terra
+				"order by StateNme ASC " ; 
 		
 		try {
 			Connection conn = DBConnect.getConnection() ;
 
 			PreparedStatement st = conn.prepareStatement(sql) ;
 			
-			st.setInt(1, anno);
+			st.setInt(1, anno); //imposto anno prima di eseguire la query
 			ResultSet rs = st.executeQuery() ;
 			
 			List<Country> list = new LinkedList<Country>() ;
@@ -93,12 +96,17 @@ public class BordersDAO {
 
 	}
 	
+	
+	/*per gli archi mi faccio filtrare contiguity per farmi restituire le coppie di stati che devo collegare
+	 * ovvero le coppie degli id, per poi risalire all'oggetto country dentro il mio grafo
+	 * -->creo classe appositaCoppiaNoStati dove salvo i due id della coppia da collegare,
+	 * al model restituisco questo oggetto contenente id degli stati adiacenti*/
 	public List<CoppiaNoStati> getCoppieAdiacenti(int anno) {
 		String sql = "select state1no, state2no " + 
 				"from contiguity " + 
 				"where year<=? " + 
 				"and conttype=1 " + 
-				"and state1no < state2no" ;
+				"and state1no < state2no" ; //non torno elemento ed il suo contrario, AB BA prendo solo coppia 
 		
 		List<CoppiaNoStati> result = new ArrayList<>() ;
 		
@@ -107,11 +115,11 @@ public class BordersDAO {
 
 			PreparedStatement st = conn.prepareStatement(sql) ;
 			
-			st.setInt(1, anno);
+			st.setInt(1, anno);//setto l'anno
 			
 			ResultSet rs = st.executeQuery() ;
 			
-			while(rs.next()) {
+			while(rs.next()) { //per ogni risultato, creo oggetto COppiaNOStati e lo aggiunto
 				result.add( new CoppiaNoStati(rs.getInt("state1no"), rs.getInt("state2no"))) ;
 			}
 			

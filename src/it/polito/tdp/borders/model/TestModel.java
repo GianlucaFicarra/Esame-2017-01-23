@@ -12,7 +12,7 @@ public class TestModel {
 		List<CountryAndNumber> list = m.getCountryAndNumber() ;
 		
 		for(CountryAndNumber c: list) {
-			System.out.format("%s %d\n", c.getCountry().getStateName(), c.getNumber()) ;
+			System.out.format("Country: %s - Num confinanti: %d\n", c.getCountry().getStateName(), c.getNumber()) ;
 		}
 		
 	}

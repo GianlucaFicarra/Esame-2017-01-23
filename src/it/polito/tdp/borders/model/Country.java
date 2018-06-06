@@ -1,19 +1,7 @@
 package it.polito.tdp.borders.model;
 
-/**
- * Java Bean class for representing instances of the COUNTRY table in the COUNTRIES data-set.
- * 
- * <p>Includes 3 properties: 
- * <ul>
- * <li>{@code cCode} (the country code)
- * <li>{@code stateAbb} (a 3 letter abbreviation for the state),
- * <li>{@code stateName} (the full name of the state).
- * </ul>
- * 
- * @author Fulvio
- *
- */
-public class Country {
+
+public class Country { //Javabean: sono i vertici del grafo
 
 	private int cCode ; // Country Code for the state
 	private String stateAbb ; // State Abbreviation (3 capital letters)
@@ -108,7 +96,8 @@ public class Country {
 	 */
 	@Override
 	public String toString() {
-		return String.format("[%s=%s]", stateAbb, stateName);
+		//return String.format("[%s=%s]", stateAbb, stateName);
+		return this.stateName ; //permette di vedere solo nome stato nella tendina
 	}
 	
 	

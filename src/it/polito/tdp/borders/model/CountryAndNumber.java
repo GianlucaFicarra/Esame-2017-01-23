@@ -1,5 +1,9 @@
 package it.polito.tdp.borders.model;
 
+
+/*classe creata perche devo restituire al controller lista di oggetti
+ * che contengano country e numero di stti ad esso confinanti
+ * ordinati per numero decrescente di confinanti */
 public class CountryAndNumber implements Comparable<CountryAndNumber> {
 	
 	private Country country ;
