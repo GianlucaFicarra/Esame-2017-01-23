@@ -57,10 +57,10 @@ public class BordersDAO {
 	public List<Country> getCountriesFromYear(int anno) {
 		String sql = "select * from country " + //dammi i campi di country
 				"where CCode in ( " +  //solo se il cod cauntry sta nell'intervallo specificato
-				"select state1no " +  //query annidata, seleziona stato 1 da tabella di confinanti 
-				"from contiguity " + 
-				"where year<=? and conttype=1)" +//se anno minore di quello passato e confine via terra
-				"order by StateNme ASC " ; 
+				"select state1no " +  //query annidata, seleziona stato 1 (coppia AB BA uguale mi basta dallo stato 1)
+				"from contiguity " + // da tabella di confinanti 
+				"where year<=? and conttype=1)" + //se anno minore di quello passato e confine via terra
+				"order by StateNme ASC " ;  //ordinati inordine alfatetico
 		
 		try {
 			Connection conn = DBConnect.getConnection() ;
@@ -143,6 +143,8 @@ public class BordersDAO {
 			System.out.println(c);
 		}
 	}
+	
+	
 	
 	
 }
